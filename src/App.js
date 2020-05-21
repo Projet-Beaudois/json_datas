@@ -29,11 +29,11 @@ export default class App extends Component {
     return (
       <div>
         <div style={{ justifyContent: "space-around", display: "flex" }}>
-          <input
+          {/*} <input
             type="file"
             onChange={this.fileHandler.bind(this)}
             style={{ padding: "10px" }}
-          />
+    />*/}
         </div>
         <p>
           <ul>{JSON.stringify(ProposalData)}</ul>
