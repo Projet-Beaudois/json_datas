@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import ProposalData from "./JsonData/proposalData.json";
+import { Button } from "@material-ui/core";
+import { ExcelRenderer, OutTable } from "react-excel-renderer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  fileHandler = (event) => {
+    let fileObj = event.target.files[0];
+
+    ExcelRenderer(fileObj, (err, resp) => {
+      if (err) {
+        console.log(err);
+      } else {
+        this.setState({
+          cols: resp.cols,
+          rows: resp.rows,
+        });
+      }
+    });
+  };
+  render() {
+    return (
+      <div>
+        <div style={{ justifyContent: "space-around", display: "flex" }}>
+          <input
+            type="file"
+            onChange={this.fileHandler.bind(this)}
+            style={{ padding: "10px" }}
+          />
+        </div>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <ul>{JSON.stringify(ProposalData)}</ul>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      </div>
+    );
+  }
 }
-
-export default App;
